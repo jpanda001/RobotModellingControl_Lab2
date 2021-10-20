@@ -1,10 +1,11 @@
-%% function that defines the puma560 robot using DH parameters
-function structure = mypuma560(DH)
-    % Creating a Link object for each robot joint
-    for i = 1:length(DH)
-        L(i) = Link(DH(i, :), 'standard');
+function myrobot = mypuma560(DH)
+
+    links = [Link];   
+    DHsize = size(DH);
+    for i = 1:DHsize(1)
+         links(i) = Link('d',DH(i,2), 'a', DH(i,3), 'alpha', DH(i,4));
     end
+   
+    myrobot = SerialLink(links,'name', 'puma560');
     
-    % Creating robot structure using SerialLink
-    structure = SerialLink(L, 'name', 'puma560');
 end
